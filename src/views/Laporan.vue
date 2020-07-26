@@ -73,6 +73,7 @@ export default {
 
       const columnsTank = [
         { title: "Tanggal", dataKey: "tanggal" },
+        { title: "Dilayani oleh", dataKey: "dilayaniOleh" },
         { title: "Nama pengantar", dataKey: "namaPengantar" },
         { title: "Harga per tanki (Rp)", dataKey: "hargaPerTanki" },
       ];

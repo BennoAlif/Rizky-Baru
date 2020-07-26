@@ -77,15 +77,31 @@
         </v-dialog>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">
-          mdi-pencil
-        </v-icon>
-        <v-icon small @click="deleteItem(item)">
-          mdi-delete
-        </v-icon>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              small
+              class="mr-2"
+              @click="editItem(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-pencil
+            </v-icon>
+          </template>
+          <span>Ubah data</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon small @click="deleteItem(item)" v-bind="attrs" v-on="on">
+              mdi-delete
+            </v-icon>
+          </template>
+          <span>Hapus data</span>
+        </v-tooltip>
       </template>
       <template v-slot:no-data>
-        There is no data to show
+        Tidak ada data
       </template>
     </v-data-table>
     <v-snackbar v-model="snackbar" :color="alertType">
@@ -115,7 +131,7 @@ export default {
     search: "",
     headers: [
       { text: "Dilayani oleh", value: "dilayaniOleh" },
-      { text: "Harga satuan", value: "hargaSatuan" },
+      { text: "Harga per galon", value: "hargaSatuan" },
       { text: "Jumlah galon", value: "jumlahGalon" },
       { text: "Total harga", value: "totalHarga" },
       { text: "Aksi", value: "actions", sortable: false },
@@ -144,12 +160,12 @@ export default {
 
   created() {
     this.loading = true;
-    db.collection("transaksiGalon")
+    db.collection("Transaksi_galon")
       .where("bulan", "==", this.getMonth)
       .get()
       .then((res) => {
         if (!res.empty) {
-          db.doc(`transaksiGalon/${res.docs[0].id}`)
+          db.doc(`Transaksi_galon/${res.docs[0].id}`)
             .collection("transaksiHariIni")
             .where("tanggal", "==", this.getTodayDate)
             .onSnapshot((res) => {
@@ -211,13 +227,13 @@ export default {
     },
 
     deleteItem(item) {
-      confirm("Are you sure you want to delete this item?") &&
+      confirm("Apakah anda yakin ingin menghapus data ini?") &&
         db
-          .collection(`transaksiGalon`)
+          .collection(`Transaksi_galon`)
           .where("bulan", "==", this.getMonth)
           .get()
           .then((res) => {
-            db.doc(`transaksiGalon/${res.docs[0].id}`)
+            db.doc(`Transaksi_galon/${res.docs[0].id}`)
               .collection("transaksiHariIni")
               .doc(item.id)
               .delete()
@@ -246,11 +262,11 @@ export default {
     },
 
     save() {
-      db.collection(`transaksiGalon`)
+      db.collection(`Transaksi_galon`)
         .where("bulan", "==", this.getMonth)
         .get()
         .then((res) => {
-          db.doc(`transaksiGalon/${res.docs[0].id}`)
+          db.doc(`Transaksi_galon/${res.docs[0].id}`)
             .collection("transaksiHariIni")
             .doc(this.editedItem.id)
             .update({

@@ -93,17 +93,17 @@ export default new Vuex.Store({
     tambahTransaksiGalon({ commit }, data) {
       let bulan = data.tanggal.substring(0, 7);
 
-      db.collection("transaksiGalon")
+      db.collection("Transaksi_galon")
         .where("bulan", "==", bulan)
         .get()
         .then((res) => {
           if (res.empty) {
             console.log("data tidak ada");
-            db.collection("transaksiGalon")
+            db.collection("Transaksi_galon")
               .add({ bulan: bulan })
               .then((res) =>
                 db
-                  .doc(`transaksiGalon/${res.id}`)
+                  .doc(`Transaksi_galon/${res.id}`)
                   .collection("transaksiHariIni")
                   .add(data)
                   .then(() => {
@@ -120,7 +120,7 @@ export default new Vuex.Store({
               );
           } else {
             console.log("data sudah ada", res);
-            db.doc(`transaksiGalon/${res.docs[0].id}`)
+            db.doc(`Transaksi_galon/${res.docs[0].id}`)
               .collection("transaksiHariIni")
               .add(data)
               .then(() => {
@@ -139,17 +139,17 @@ export default new Vuex.Store({
     tambahTanki({ commit }, data) {
       let bulan = data.tanggal.substring(0, 7);
 
-      db.collection("transaksiTanki")
+      db.collection("Transaksi_tanki")
         .where("bulan", "==", bulan)
         .get()
         .then((res) => {
           if (res.empty) {
             console.log("data tidak ada");
-            db.collection("transaksiTanki")
+            db.collection("Transaksi_tanki")
               .add({ bulan: bulan })
               .then((res) =>
                 db
-                  .doc(`transaksiTanki/${res.id}`)
+                  .doc(`Transaksi_tanki/${res.id}`)
                   .collection("transaksiHariIni")
                   .add(data)
                   .then(() => {
@@ -166,7 +166,7 @@ export default new Vuex.Store({
               );
           } else {
             console.log("data sudah ada", res);
-            db.doc(`transaksiTanki/${res.docs[0].id}`)
+            db.doc(`Transaksi_tanki/${res.docs[0].id}`)
               .collection("transaksiHariIni")
               .add(data)
               .then(() => {

@@ -1,6 +1,6 @@
 <template>
   <v-card class="rounded-lg px-6 pb-6" outlined height="100%">
-    <v-card-title>Transaksi Galon</v-card-title>
+    <v-card-title>Transaksi Tanki</v-card-title>
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-card-text>
         <v-menu
@@ -62,6 +62,7 @@
 
 <script>
 import moment from "moment";
+import { mapState } from 'vuex';
 export default {
   data: () => ({
     date: moment().format("YYYY-MM-DD"),
@@ -77,9 +78,11 @@ export default {
       this.hargaPerTanki = 0;
     }
   },
+  computed: mapState(["userProfile"]),
   methods: {
     validate() {
       let data = {
+        dilayaniOleh: this.userProfile.nama,
         namaPengantar: this.namaPengantar,
         tanggal: this.date,
         hargaPerTanki: parseFloat(this.hargaPerTanki),

@@ -85,18 +85,39 @@
         </v-dialog>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon small @click="editItem(item)">
-          mdi-pencil
-        </v-icon>
-        <v-icon small class="mx-2" @click="resetPassword(item)">
-          mdi-lock-reset
-        </v-icon>
-        <v-icon small @click="deleteItem(item)">
-          mdi-delete
-        </v-icon>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon small @click="editItem(item)" v-bind="attrs" v-on="on">
+              mdi-pencil
+            </v-icon>
+          </template>
+          <span>Ubah data</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              small
+              class="mx-2"
+              @click="resetPassword(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-lock-reset
+            </v-icon>
+          </template>
+          <span>Ubah password</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon small @click="deleteItem(item)" v-bind="attrs" v-on="on">
+              mdi-delete
+            </v-icon>
+          </template>
+          <span>Hapus data</span>
+        </v-tooltip>
       </template>
       <template v-slot:no-data>
-        There is no data
+        Tidak ada data
       </template>
     </v-data-table>
     <v-snackbar v-model="snackbar" :color="alertType">
@@ -213,7 +234,7 @@ export default {
     },
 
     deleteItem(item) {
-      let r = confirm("Are you sure you want to delete this item?");
+      let r = confirm("Apakah anda yakin ingin menghapus data ini?");
       if (r == true) {
         const deleteUser = functions.httpsCallable("deleteUser");
         db.collection("karyawan")

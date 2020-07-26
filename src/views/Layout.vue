@@ -34,9 +34,14 @@
       <v-toolbar-title>Rizky Baru</v-toolbar-title>
       <v-spacer></v-spacer>
       {{ userProfile.nama }}
-      <v-btn icon large @click="logout">
-        <v-icon>mdi-power</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon large @click="logout" v-bind="attrs" v-on="on">
+            <v-icon>mdi-power</v-icon>
+          </v-btn>
+        </template>
+         <span>Keluar</span>
+      </v-tooltip>
     </v-app-bar>
 
     <v-main class="grey lighten-5">
