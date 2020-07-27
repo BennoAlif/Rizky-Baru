@@ -14,6 +14,7 @@ export default new Vuex.Store({
     users: [],
     currentUser: null,
     userProfile: {},
+    userId: "",
     alertType: "",
     totalPemasukan: "",
     totalPengeluaran: "",
@@ -68,6 +69,7 @@ export default new Vuex.Store({
     },
     onAuth({ commit }) {
       auth.onAuthStateChanged((user) => {
+        this.state.userId = user.uid;
         if (user) {
           db.collection("karyawan")
             .doc(user.uid)

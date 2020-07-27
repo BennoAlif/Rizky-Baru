@@ -62,7 +62,7 @@
 
 <script>
 import moment from "moment";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   data: () => ({
     date: moment().format("YYYY-MM-DD"),
@@ -78,10 +78,11 @@ export default {
       this.hargaPerTanki = 0;
     }
   },
-  computed: mapState(["userProfile"]),
+  computed: mapState(["userProfile", "userId"]),
   methods: {
     validate() {
       let data = {
+        idKaryawan: this.userId,
         dilayaniOleh: this.userProfile.nama,
         namaPengantar: this.namaPengantar,
         tanggal: this.date,

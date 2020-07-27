@@ -96,7 +96,7 @@ export default {
     totalHarga() {
       return this.jumlahGalon * this.satuan;
     },
-    ...mapState(["userProfile"]),
+    ...mapState(["userProfile", "userId"]),
   },
   created() {
     if (localStorage.getItem("hargaSatuan")) {
@@ -108,6 +108,7 @@ export default {
   methods: {
     validate() {
       let data = {
+        idKaryawan: this.userId,
         dilayaniOleh: this.userProfile.nama,
         tanggal: this.date,
         hargaSatuan: parseFloat(this.satuan),
